@@ -1,11 +1,39 @@
-<div style="width: 20%; height: 100%; border: 1px solid black">
-    <div style="width: 100%; height: 80px; background-color:grey; border-bottom: 1px solid black; text-align:center">
-        <a href="#">{{ $title }}</a>
+<div class="sidebar">
+    <div class="menu-item">
+        <a href="">User</a>
     </div>
-    <div style="width: 100%; height: 80px; background-color:grey; border-bottom: 1px solid black; text-align:center">
-        <a href="#">Notes</a>
+    <div class="menu-item">
+        <a href="">Notes</a>
     </div>
-    <div style="width: 100%; height: 80px; background-color:grey; border-bottom: 1px solid black; text-align:center">
-        <a href="#">Statistiques</a>
+    <div class="menu-item">
+        <a href="">Statistiques</a>
     </div>
 </div>
+
+<style>
+    .sidebar {
+        width: 20%;
+        height: 100vh;
+        background-color: grey;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sidebar .menu-item {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: background-color 0.5s;
+    }
+
+    .sidebar .menu-item a {
+        text-decoration: none;
+        color: white;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .sidebar .menu-item:hover {
+        background-color: darkgrey;
+    }
+</style>
