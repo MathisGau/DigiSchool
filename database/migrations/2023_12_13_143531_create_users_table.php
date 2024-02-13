@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('password'); 
-            $table->string('userType'); // Professor, Student       
+            $table->integer('userType'); //1 for student, 2 for teacher       
             $table->timestamps();
         });
     }
