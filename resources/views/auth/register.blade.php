@@ -12,6 +12,21 @@
             <x-input-error :messages="$errors->get('userType')" class="mt-2" />
         </div>
 
+        <!-- Subject (caché par défaut) -->
+        <div class="mt-3 hidden" id="subjectSelect">
+            <x-input-label for="subject" :value="__('Subject')" />
+            <select id="subject" name="subject"
+                class="block mt-1 w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:focus:ring-offset-gray-900 dark:focus:ring-indigo-500 dark:focus:border-indigo-500 rounded-md shadow-sm">
+                <option value="0">-- Selectionner une matière --</option>
+                <option value="1">Mathématiques</option>
+                <option value="2">Anglais</option>
+                <option value="3">Français</option>
+                <option value="4">Histoire</option>
+                <option value="5">Sciences</option>
+            </select>
+            <x-input-error :messages="$errors->get('subject')" class="mt-2" />
+        </div>
+
         <!-- Name -->
         <div class="mt-3">
             <x-input-label for="name" :value="__('Name')" />
@@ -59,4 +74,18 @@
             </x-primary-button>
         </div>
     </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var userTypeSelect = document.getElementById('userType');
+            var subjectSelect = document.getElementById('subjectSelect');
+
+            userTypeSelect.addEventListener('change', function() {
+                if (userTypeSelect.value === '2') {
+                    subjectSelect.classList.remove('hidden');
+                } else {
+                    subjectSelect.classList.add('hidden');
+                }
+            });
+        });
+    </script>
 </x-guest-layout>

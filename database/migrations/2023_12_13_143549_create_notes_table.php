@@ -14,13 +14,11 @@ return new class extends Migration
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->string('subject');
-            $table->string('title');
+            $table->foreignId('evaluations_id')->constrained();
+            $table->foreignId('evaluations_subject')->constrained();
+            $table->foreignId('evaluations_user_id')->constrained();
             $table->integer('mark');
             $table->string('description');
-            $table->string('teacher');
-            $table->string('student');
-            $table->string('coeff');
             $table->timestamps();
         });
     }

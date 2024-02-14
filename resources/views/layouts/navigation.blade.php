@@ -4,7 +4,7 @@
     <!-- Primary Navigation Menu -->
     <div class="">
         <!-- Logo -->
-        <div class="mb-14">
+        <div class="mb-10">
             <a href="{{ route('dashboard') }}">
                 <div class="text-lg font-bold">
                     <h1 class="text-white text-2xl">DigiSchool</h1>
@@ -15,20 +15,26 @@
 
         <!-- Navigation Links -->
         <div class="flex flex-col gap-8">
-            <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Acceuil') }}
-            </x-nav-link>
-            <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Notes') }}
-            </x-nav-link>
-            <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Statistiques') }}
-            </x-nav-link>
+            <div>
+                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    {{ __('Acceuil') }}
+                </x-nav-link>
+            </div>
+            <div>
+                <x-nav-link :href="route('notes')" :active="request()->routeIs('notes')">
+                    {{ __('Notes') }}
+                </x-nav-link>
+            </div>
+            <div>
+                <x-nav-link :href="route('statistiques')" :active="request()->routeIs('statistiques')">
+                    {{ __('Statistiques') }}
+                </x-nav-link>
+            </div>
         </div>
     </div>
 
     <!-- Settings Dropdown -->
-    <div class="relative mb-12">
+    <div class="flex justify-center mb-12 w-max">
         <x-dropdown align="left" width="48" class="origin-top">
             <x-slot name="trigger">
                 <button class="flex flex-row text-gray-500 dark:text-gray-400">
