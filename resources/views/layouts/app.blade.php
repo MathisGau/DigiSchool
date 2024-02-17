@@ -19,6 +19,7 @@
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900 flex flex-row">
         @include('layouts.navigation')
+        <div class="fixed">@include('layouts.navigation')</div>
 
         <!-- Page Content -->
         <main class="w-full">

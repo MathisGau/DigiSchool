@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreignId('evaluations_id')->constrained();
             $table->foreignId('evaluations_subject')->constrained();
             $table->foreignId('evaluations_user_id')->constrained();
-            $table->integer('mark');
-            $table->string('description');
+            $table->decimal('mark', 8, 2)->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

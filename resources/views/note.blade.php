@@ -1,105 +1,129 @@
 <x-app-layout>
-    <div class="flex flex-row justify-around">
-        <form method="POST" action="{{ route('register') }}" class="flex-1 px-20">
-            @csrf
-            <div class="text-lg font-bold">
-                <h1 class="text-white text-5xl m-10">Evaluation</h1>
-            </div>
+    <div class="flex flex-row justify-around mt-2 mb-10">
+        @if (Auth::user()->userType === 2)
+            <form method="POST" action="{{ route('notes') }}" class="flex-1 px-44">
+                @csrf
 
-            <!-- Nom de l'Evaluation -->
-            <div class="mt-3">
-                <x-input-label for="evaluation" :value="__('Titre')" />
-                <x-text-input id="evaluation" class="block mt-1 w-full" type="text" name="evaluation" :value="old('evaluation')"
-                    required autofocus autocomplete="evaluation" />
-                <x-input-error :messages="$errors->get('evaluation')" class="mt-2" />
-            </div>
+                <div class="mt-8 flex flex-row justify-between">
+                    <!-- Titre de l'évaluation -->
+                    <div class="w-1/2 mr-2">
+                        <x-input-label for="title" :value="__('Titre de l\'évaluation')" />
+                        <x-text-input id="title" class="block mt-1 w-full" type="text" name="title"
+                            :value="old('title')" required autofocus />
+                        <x-input-error :messages="$errors->get('title')" class="mt-2" />
+                    </div>
 
-            <!-- Coefficients -->
-            <div class="mt-3">
-                <x-input-label for="Coefficient" :value="__('Coefficient')" />
-                <select id="coefficient" name="oefficient"
-                    class="block mt-1 w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:focus:ring-offset-gray-900 dark:focus:ring-indigo-500 dark:focus:border-indigo-500 rounded-md shadow-sm">
-                    <option value="1">1</option>
-                    <option value="0,5">0,5</option>
-                    <option value="1,5">1,5</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                </select>
-                <x-input-error :messages="$errors->get('Coefficient')" class="mt-2" />
-            </div>
+                    <!-- Coefficient de l'évaluation -->
+                    <div class="w-1/2 ml-2">
+                        <x-input-label for="coefficient" :value="__('Coefficient')" />
+                        <x-text-input id="coefficient" class="block mt-1 w-full" type="number" min="0"
+                            max="20" step="0.5" name="coefficient" :value="old('coefficient')" required />
+                        <x-input-error :messages="$errors->get('coefficient')" class="mt-2" />
+                    </div>
+                </div>
 
-            <div class="flex items-center justify-end mt-3">
-                <x-secondary-button>
-                    {{ __('Annuler') }}
-                </x-secondary-button>
+                <!-- Tableau des notes -->
+                <div class="mt-8">
+                    <table class="min-w-full divide-y divide-gray-200 rounded-lg bg-gray-800">
+                        <thead class="">
+                            <tr class="font medium text-xs text-left text-gray-100">
+                                <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">
+                                    Nom de l'élève
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">
+                                    Note
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">
+                                    Remarque
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            @foreach ($students as $student)
+                                <tr class="text-gray-300">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm">{{ $student->name }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <x-text-input id="note{{ $student->id }}" class="block w-full" type="number"
+                                            min="0" max="20" name="notes[{{ $student->id }}][note]"
+                                            :value="old('notes.' . $student->id . '.note')" required />
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <x-text-input id="description{{ $student->id }}" class="block w-full"
+                                            type="text" name="notes[{{ $student->id }}][description]"
+                                            :value="old('notes.' . $student->id . '.description')" required />
+                                    </td>
+                                </tr>
+                            @endforeach
 
-                <x-primary-button class="ms-4">
-                    {{ __('Enregistrer') }}
-                </x-primary-button>
-            </div>
-        </form>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="flex items-center justify-end mt-3 gap-4">
+                    <!-- Bouton Annuler pour vider les champs -->
+                    <div class="flex items-center justify-start mt-4">
+                        <x-secondary-button type="reset">
+                            {{ __('Annuler') }}
+                        </x-secondary-button>
+                    </div>
 
-
-        <form method="POST" action="{{ route('register') }}" class="flex-1 px-20">
-            @csrf
-            <div class="text-lg font-bold">
-                <h1 class="text-white text-5xl m-10">Notes</h1>
-            </div>
-            <!-- Elève -->
-            <div class="">
-                <x-input-label for="id_user" :value="__('Elève')" />
-                <select id="id_user" name="id_user"
-                    class="block mt-1 w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:focus:ring-offset-gray-900 dark:focus:ring-indigo-500 dark:focus:border-indigo-500 rounded-md shadow-sm">
-                    <option value="0">-- Selectionner un élève --</option>
-                    <option value="1">Mathis Gauthrot</option>
-                    <option value="2">Timm Busi</option>
-                    <option value="3">Aurélien Druon</option>
-                    <option value="3">Emilien Ridard</option>
-                    <option value="3">Ismael Charni</option>
-                    <option value="3">Quan Luu</option>
-                </select>
-                <x-input-error :messages="$errors->get('id_user')" class="mt-2" />
-            </div>
-
-            <!-- Evaluation -->
-            <div class="mt-3">
-                <x-input-label for="evaluation" :value="__('Evaluation')" />
-                <select id="evaluation" name="evaluation"
-                    class="block mt-1 w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:focus:ring-offset-gray-900 dark:focus:ring-indigo-500 dark:focus:border-indigo-500 rounded-md shadow-sm">
-                    <option value="1">Eval n°1</option>
-                    <option value="2">Eval n°2</option>
-                </select>
-                <x-input-error :messages="$errors->get('evaluation')" class="mt-2" />
-            </div>
-
-            <!-- Notes -->
-            <div class="mt-3">
-                <x-input-label for="note" :value="__('Note')" />
-                <x-text-input id="note" class="block mt-1 w-full" type="text" name="note" :value="old('note')"
-                    required autofocus autocomplete="note" />
-                <x-input-error :messages="$errors->get('note')" class="mt-2" />
-            </div>
-
-            <!-- Description -->
-            <div class="mt-3">
-                <x-input-label for="description" :value="__('Déscription')" />
-                <x-text-input id="description" class="block mt-1 w-full" type="text" name="description"
-                    :value="old('description')" required autofocus autocomplete="description" />
-                <x-input-error :messages="$errors->get('description')" class="mt-2" />
-            </div>
-
-            <div class="flex items-center justify-end mt-3">
-                <x-secondary-button>
-                    {{ __('Annuler') }}
-                </x-secondary-button>
-
-                <x-primary-button class="ms-4">
-                    {{ __('Enregistrer') }}
-                </x-primary-button>
-            </div>
-        </form>
+                    <!-- Bouton de soumission -->
+                    <div class="flex items-center justify-end mt-4">
+                        <x-primary-button>
+                            {{ __('Enregistrer') }}
+                        </x-primary-button>
+                    </div>
+                </div>
+            </form>
+        @elseif (Auth::user()->userType === 1)
+            <div class="min-w-screen min-h-screen flex items-center justify-center">
+                <div class="w-full">
+                    <div class="shadow-md rounded my-6">
+                        <table class="min-w-full divide-y divide-gray-200 rounded-lg bg-gray-800">
+                            <thead class="">
+                                <tr class="font medium text-xs text-left text-gray-100">
+                                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">
+                                        Subject
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">
+                                        Title
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">
+                                        Coefficient
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">
+                                        Note
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">
+                                        Description
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                @foreach ($notes as $note)
+                                    <tr class="text-gray-300 text-sm">
+                                        {{-- <td class="px-6 py-4 whitespace-nowrap">
+                                            {{ $note->evaluation->subject }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            {{ $note->evaluation->title }}
+                                        </td>
+                                        <td class="py-3 px-6 text-center">
+                                            {{ $note->evaluation->coefficient }}
+                                        </td> --}}
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            {{ $note->mark }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            {{ $note->description }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+        @endif
     </div>
 </x-app-layout>
