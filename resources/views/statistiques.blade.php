@@ -121,22 +121,47 @@
                     }
                 </script>
             @elseif (Auth::user()->userType === 1)
-                <div class="flex flex-row justify-center gap-4">
-                    <div class="flex items-center mb-4">
-                        <input type="radio" id="displayTable" name="displayOption" value="table" checked
-                            class="sr-only peer">
-                        <label for="displayTable"
-                            class="relative flex items-center cursor-pointer px-3 py-2 rounded-md bg-gray-800 text-gray-500 hover:bg-gray-700 transition-colors duration-300 peer-checked:bg-gray-700 peer-checked:text-white peer-checked:text-white">
-                            <span class="">Bulletin</span>
-                        </label>
+                <!-- Contenu pour les élèves -->
+                <div class="w-full">
+                    <div class="flex flex-row justify-center gap-4">
+                        <div class="flex items-center mb-4">
+                            <input type="radio" id="displayTable" name="displayOption" value="table" checked
+                                class="sr-only peer">
+                            <label for="displayTable"
+                                class="relative flex items-center cursor-pointer px-3 py-2 rounded-md bg-gray-800 text-gray-500 hover:bg-gray-700 transition-colors duration-300 peer-checked:bg-gray-700 peer-checked:text-white peer-checked:text-white">
+                                <span class="">Bulletin</span>
+                            </label>
+                        </div>
+                        <div class="flex items-center mb-4">
+                            <input type="radio" id="displayGraph" name="displayOption" value="graph"
+                                class="sr-only peer">
+                            <label for="displayGraph"
+                                class="relative flex items-center cursor-pointer px-3 py-2 rounded-md bg-gray-800 text-gray-500 hover:bg-gray-700 transition-colors duration-300 peer-checked:bg-gray-700 peer-checked:text-white peer-checked:text-white">
+                                <span class="">Evolution</span>
+                            </label>
+                        </div>
                     </div>
-                    <div class="flex items-center mb-4">
-                        <input type="radio" id="displayGraph" name="displayOption" value="graph"
-                            class="sr-only peer">
-                        <label for="displayGraph"
-                            class="relative flex items-center cursor-pointer px-3 py-2 rounded-md bg-gray-800 text-gray-500 hover:bg-gray-700 transition-colors duration-300 peer-checked:bg-gray-700 peer-checked:text-white peer-checked:text-white">
-                            <span class="">Evolution</span>
-                        </label>
+                    <div id="tableContent" class="shadow-md rounded my-6">
+                        {{-- <div>{{ $subjects }}</div> --}}
+                        <table class="min-w-full divide-y divide-gray-200 rounded-lg bg-gray-800">
+                            <thead>
+                                <tr class="font medium text-xs text-left text-gray-100">
+                                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Matière</th>
+                                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Moyenne</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                @foreach ($bulletin as $subject => $average)
+                                    <tr class="text-gray-300">
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $subject }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $average }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="graphContent" class="hidden mt-8">
+                        <!-- Contenu du graphique -->
                     </div>
                 </div>
             @endif

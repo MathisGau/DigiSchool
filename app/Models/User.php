@@ -22,7 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'subject', //1 for math, 2 for english, 3 for french, 4 for history, 5 for science
+        'subject_id',
     ];
 
     /**

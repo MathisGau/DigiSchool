@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Subjects extends Model
 {
     use HasFactory;
+
+    public function notes()
+    {
+        return $this->hasMany(Notes::class, 'evaluations_subject_id', 'id');
+    }
 }

@@ -17,9 +17,9 @@ class Evaluation extends Model
         'title',
         'coeff',
     ];
-    public function subject()
+    public function subjectModel()
     {
-        return $this->belongsTo(Subjects::class, 'subject', 'id');
+        return $this->belongsTo(Subjects::class, 'subject_id', 'id');
     }
 
     public function notes()

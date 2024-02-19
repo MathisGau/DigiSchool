@@ -51,7 +51,7 @@ class NewMarkNotification extends Notification
             ->line('Bonjour ' . $notifiable->name . ',')
             ->line('Vous avez de nouvelles notes attribuées :')
             ->line('---------------------')
-            ->line('Évaluation : ' . $this->notes['evaluation_title'])
+            ->line('Évaluation : ' . $this->notes['evaluations_title'])
             ->line('Note : ' . $this->notes['mark'])
             ->line('Description : ' . $this->notes['description'])
             ->line('---------------------')

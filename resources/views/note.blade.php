@@ -60,7 +60,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <x-text-input id="description{{ $student->id }}" class="block w-full"
                                             type="text" name="notes[{{ $student->id }}][description]"
-                                            :value="old('notes.' . $student->id . '.description')" required />
+                                            :value="old('notes.' . $student->id . '.description')" />
                                     </td>
                                 </tr>
                             @endforeach
@@ -118,7 +118,7 @@
         @elseif (Auth::user()->userType === 1)
             <div class="min-w-screen h-full flex items-center justify-center">
                 <div class="w-full">
-                    <div class="shadow-md rounded my-6">
+                    <div class="rounded my-6">
                         {{-- <div class="text-white">{{ $notes }}</div> --}}
                         <div class="flex justify-end mb-4 gap-4">
                             <div>
@@ -136,7 +136,8 @@
                                     class="block mt-1 bg-gray-800 text-gray-100 border border-gray-700 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500">
                                     <option value="">Toutes les matières</option>
                                     @foreach ($subjects as $subject)
-                                        <option value="{{ $subject->id }}">{{ $subject->subjectName }}</option>
+                                        <option value="{{ $subject->subjectName }}">{{ $subject->subjectName }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -165,8 +166,8 @@
                                 @foreach ($notes as $note)
                                     <tr class="text-gray-300 text-sm">
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            {{-- {{ $note->evaluations->subject->subjectName }} --}}
-                                            {{ $note->evaluations->subject }}
+                                            {{ $note->evaluations->subjectModel->subjectName }}
+                                            {{-- {{ $note->evaluations->subject }} --}}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             {{ $note->evaluations->title }}

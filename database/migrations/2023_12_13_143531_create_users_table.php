@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('password'); 
             $table->integer('userType'); //1 for student, 2 for teacher 
-            $table->foreignId('subject')->nullable(); 
+            $table->foreignId('subject_id')->nullable(); 
             $table->timestamps();
         });
     }

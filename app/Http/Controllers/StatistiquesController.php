@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Evaluation;
 use App\Models\Notes;
+use App\Models\Subjects;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,7 +38,30 @@ class StatistiquesController extends Controller
             'stats' => $stats,
         ]);
     } elseif ($user->userType === 1) {
-        return view('statistiques');
-    }
+        $subjects = Subjects::with(['notes' => function ($query) use ($user) {
+            $query->where('user_id', $user->id)->with('evaluations');
+        }])->get();
+    
+        $bulletin = [];
+    
+        foreach ($subjects as $subject) {
+            $totalMark = 0;
+            $totalCoefficient = 0;
+    
+            foreach ($subject->notes as $note) {
+                $totalMark += $note->mark * $note->evaluations->coeff;
+                $totalCoefficient += $note->evaluations->coeff;
+            }
+    
+            if ($totalCoefficient > 0) {
+                $average = $totalMark / $totalCoefficient;
+                $bulletin[$subject->subjectName] = number_format($average, 2);
+            } else {
+                $bulletin[$subject->subjectName] = 'N/A';
+            }
+        }
+    
+        return view('statistiques', compact('bulletin'));
+    }  
 }
 }

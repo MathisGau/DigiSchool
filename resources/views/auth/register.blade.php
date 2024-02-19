@@ -15,7 +15,7 @@
         <!-- Subject (caché par défaut) -->
         <div class="mt-3 hidden" id="subjectSelect">
             <x-input-label for="subject" :value="__('Subject')" />
-            <select id="subject" name="subject"
+            <select id="subject" name="subject_id"
                 class="block mt-1 w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:focus:ring-offset-gray-900 dark:focus:ring-indigo-500 dark:focus:border-indigo-500 rounded-md shadow-sm">
                 <option value="">Sélectionnez une matière</option>
                 @foreach ($subjects as $subject)

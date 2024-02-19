@@ -22,7 +22,7 @@ class NotesController extends Controller
         }
         elseif ($user->userType === 1){
             $subjects = Subjects::all();
-            $notes = Notes::where('user_id', $user->id)->with('evaluations.subject')->orderBY('created_at', 'desc')->get();
+            $notes = Notes::where('user_id', $user->id)->with('evaluations.subjectModel')->orderBY('created_at', 'desc')->get();
             return view('note', ['notes' => $notes, 'subjects' => $subjects]);
         }
     }
@@ -63,7 +63,7 @@ class NotesController extends Controller
         // Enregistrement de l'évaluation
         $evaluation = new Evaluation();
         $evaluation->user_id = $user->id;
-        $evaluation->subject = $user->subject;
+        $evaluation->subject_id = $user->subject_id;
         $evaluation->title = $request->input('title');
         $evaluation->coeff = $request->input('coefficient');
         $evaluation->save();
@@ -74,7 +74,7 @@ class NotesController extends Controller
             $note = new Notes();
             $note->user_id = $student->id;
             $note->evaluations_id = $evaluation->id;
-            $note->evaluations_subject = $evaluation->subject;
+            $note->evaluations_subject_id = $evaluation->subject_id;
             $note->evaluations_user_id = $evaluation->user_id;
             $note->mark = $request->input("notes.{$student->id}.note");
             $note->description = $request->input("notes.{$student->id}.description");
