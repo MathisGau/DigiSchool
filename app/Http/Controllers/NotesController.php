@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Evaluation;
 use App\Models\Notes;
+use App\Models\Subjects;
 use App\Models\User;
+use App\Notifications\NewMarkNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,13 +16,14 @@ class NotesController extends Controller
         $user = Auth::user();
 
         if ($user->userType === 2){
-            $students = User::where('userType', 1)->get();
-            $evaluations = Evaluation::all();
+            $students = User::where('userType', 1)->orderBY('name', 'asc')->get();
+            $evaluations = Evaluation::where('user_id', $user->id)->with(['notes' => function ($query) {$query->orderBy('mark', 'desc');}])->orderBY('created_at', 'desc')->get();
             return view('note', ['students' => $students, 'evaluations' => $evaluations]);
         }
         elseif ($user->userType === 1){
-            $notes = Notes::where('user_id', $user->id)->with('evaluation')->get();
-            return view('note', ['notes' => $notes]);
+            $subjects = Subjects::all();
+            $notes = Notes::where('user_id', $user->id)->with('evaluations.subject')->orderBY('created_at', 'desc')->get();
+            return view('note', ['notes' => $notes, 'subjects' => $subjects]);
         }
     }
 
@@ -32,7 +35,31 @@ class NotesController extends Controller
         ]);
     
         $user = Auth::user();
+        $evaluationId = $request->get('evaluationSelect');
+
+        if ($evaluationId) {
+            // Mise à jour de l'évaluation
+            $evaluation = Evaluation::findOrFail($evaluationId);
+            $evaluation->update([
+                'title' => $request->input('title'),
+                'coefficient' => $request->input('coefficient'),
+            ]);
     
+            // Mise à jour des notes
+            $students = User::where('userType', 1)->get();
+            foreach ($students as $student) {
+                $note = Notes::where('user_id', $student->id)
+                             ->where('evaluations_id', $evaluationId)
+                             ->first();
+                if ($note) {
+                    $note->update([
+                        'mark' => $request->input("notes.{$student->id}.note"),
+                        'description' => $request->input("notes.{$student->id}.description"),
+                    ]);
+                }
+            }
+            return redirect()->route('notes')->with('success', 'Évaluation et notes mises à jour avec succès.');
+        } else {
         // Enregistrement de l'évaluation
         $evaluation = new Evaluation();
         $evaluation->user_id = $user->id;
@@ -52,9 +79,10 @@ class NotesController extends Controller
             $note->mark = $request->input("notes.{$student->id}.note");
             $note->description = $request->input("notes.{$student->id}.description");
             $note->save();
+            $student->notify(new NewMarkNotification($note));
         }
     
         return redirect()->route('notes')->with('success', 'Évaluation et notes enregistrées avec succès.');
     }
-    
+}
 }

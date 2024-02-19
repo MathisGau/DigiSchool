@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('evaluations_id')->constrained();
-            $table->foreignId('evaluations_subject')->constrained();
             $table->foreignId('evaluations_user_id')->constrained();
             $table->decimal('mark', 8, 2)->nullable();
             $table->string('description')->nullable();

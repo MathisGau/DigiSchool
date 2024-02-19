@@ -9,11 +9,10 @@ class Notes extends Model
 {
     use HasFactory;
 
-    public function evaluation()
+    public function evaluations()
     {
-        return $this->belongsTo(Evaluation::class, 'evaluation_id');
-    }
-    
+        return $this->belongsTo(Evaluation::class, 'evaluations_id', 'id');
+    }  
 
     protected $fillable = [
         'user_id', 
