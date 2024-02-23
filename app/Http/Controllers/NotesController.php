@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Notifications\NewMarkNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Notifications;
+use Carbon\Carbon;
 
 class NotesController extends Controller
 {
@@ -66,6 +68,9 @@ class NotesController extends Controller
         $evaluation->subject_id = $user->subject_id;
         $evaluation->title = $request->input('title');
         $evaluation->coeff = $request->input('coefficient');
+
+        $evaluation->load('subjectModel');
+
         $evaluation->save();
     
         // Enregistrement des notes
@@ -79,7 +84,17 @@ class NotesController extends Controller
             $note->mark = $request->input("notes.{$student->id}.note");
             $note->description = $request->input("notes.{$student->id}.description");
             $note->save();
+
+            // Enregistrement de notification
+            $notification = new Notifications();
+            $notification->user_id = $student->id;
+            $notification->subject_id = $evaluation->subject_id;
+            $notification->type = 1; // 1 pour notification de note
+            $notification->content = "Nouveau : note en {$evaluation->subjectModel->subjectName} du " . Carbon::parse($note->created_at)->locale('fr')->isoFormat('D MMMM YYYY') . ", {$note->mark}/20.";
+            $notification->save();
+
             $student->notify(new NewMarkNotification($note));
+
         }
     
         return redirect()->route('notes')->with('success', 'Évaluation et notes enregistrées avec succès.');

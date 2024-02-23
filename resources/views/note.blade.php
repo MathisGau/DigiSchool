@@ -22,7 +22,7 @@
                     <div class="flex flex-col justify-center mb-4 w-2/6">
                         <x-input-label for="coefficient" :value="__('Modifier une Evaluation')" />
                         <select id="evaluationSelect" name="evaluationSelect"
-                            class="block w-full mt-1 bg-gray-800 text-gray-100 border border-gray-700 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500">
+                            class="block w-full mt-1 bg-gray-800 text-gray-100 border border-gray-700 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 cursor-pointer hover:bg-gray-600 transition duration-300 ease-in-out">
                             <option value="">Aucune</option>
                             @foreach ($evaluations as $evaluation)
                                 <option value="{{ $evaluation->id }}">{{ $evaluation->title }}</option>
@@ -31,7 +31,7 @@
                     </div>
                 </div>
 
-                <div class="mt-8">
+                <div class="mt-4">
                     <table class="min-w-full divide-y divide-gray-200 rounded-lg bg-gray-800">
                         <thead class="">
                             <tr class="font medium text-xs text-left text-gray-100">
@@ -68,7 +68,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="flex items-center justify-end mt-3 gap-4">
+                <div class="flex items-center justify-end mt-4 mb-8 gap-4">
                     <!-- Bouton Annuler pour vider les champs -->
                     <div class="flex items-center justify-start mt-4">
                         <x-secondary-button type="reset">
@@ -124,7 +124,7 @@
                             <div>
                                 <x-input-label for="coefficient" :value="__('Ordre')" />
                                 <select id="markFilter" onchange="filterByOrdre()"
-                                    class="block mt-1 bg-gray-800 text-gray-100 border border-gray-700 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500">
+                                    class="block mt-1 bg-gray-800 text-gray-100 border border-gray-700 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 cursor-pointer hover:bg-gray-600 transition duration-300 ease-in-out">
                                     <option value="0">Aucun</option>
                                     <option value="1">Croissant</option>
                                     <option value="2">Décroissant</option>
@@ -133,7 +133,7 @@
                             <div>
                                 <x-input-label for="coefficient" :value="__('Matière')" />
                                 <select id="subjectFilter" onchange="filterBySubject()"
-                                    class="block mt-1 bg-gray-800 text-gray-100 border border-gray-700 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500">
+                                    class="block mt-1 bg-gray-800 text-gray-100 border border-gray-700 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 cursor-pointer hover:bg-gray-600 transition duration-300 ease-in-out">
                                     <option value="">Toutes les matières</option>
                                     @foreach ($subjects as $subject)
                                         <option value="{{ $subject->subjectName }}">{{ $subject->subjectName }}

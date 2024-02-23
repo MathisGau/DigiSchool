@@ -21,12 +21,12 @@
                             </label>
                         </div>
                     </div>
-                    <div id="tableContent" class="shadow-md rounded my-6">
+                    <div id="tableContent" class="rounded my-4">
                         <div class="flex justify-end mb-4 gap-4">
                             <div>
                                 <x-input-label for="coefficient" :value="__('Moyenne')" />
                                 <select id="markFilterMoyenne" onchange="filterByMoyenne()"
-                                    class="block mt-1 bg-gray-800 text-gray-100 border border-gray-700 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500">
+                                    class="block mt-1 bg-gray-800 text-gray-100 border border-gray-700 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 cursor-pointer hover:bg-gray-600 transition duration-300 ease-in-out">
                                     <option value="0">Aucun</option>
                                     <option value="1">Croissant</option>
                                     <option value="2">Décroissant</option>
@@ -35,7 +35,7 @@
                             <div>
                                 <x-input-label for="coefficient" :value="__('Date')" />
                                 <select id="markFilterDate" onchange="filterByDate()"
-                                    class="block mt-1 bg-gray-800 text-gray-100 border border-gray-700 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500">
+                                    class="block mt-1 bg-gray-800 text-gray-100 border border-gray-700 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 cursor-pointer hover:bg-gray-600 transition duration-300 ease-in-out">
                                     <option value="0">Aucun</option>
                                     <option value="1">Croissant</option>
                                     <option value="2">Décroissant</option>
@@ -43,7 +43,7 @@
                             </div>
 
                         </div>
-                        <table class="min-w-full divide-y divide-gray-200 rounded-lg bg-gray-800">
+                        <table class="min-w-full divide-y divide-gray-200 rounded-lg bg-gray-800 shadow-md">
                             <thead>
                                 <tr class="font medium text-xs text-left text-gray-100">
                                     <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">Evaluation

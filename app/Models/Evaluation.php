@@ -13,7 +13,7 @@ class Evaluation extends Model
 
     protected $fillable = [
         'user_id',
-        'subject',
+        'subject_id',
         'title',
         'coeff',
     ];
