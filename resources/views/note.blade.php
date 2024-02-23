@@ -118,7 +118,7 @@
         @elseif (Auth::user()->userType === 1)
             <div class="min-w-screen h-full flex items-center justify-center">
                 <div class="w-full">
-                    <div class="rounded my-6">
+                    <div class="rounded my-6 w-full">
                         {{-- <div class="text-white">{{ $notes }}</div> --}}
                         <div class="flex justify-end mb-4 gap-4">
                             <div>
@@ -145,19 +145,24 @@
                         <table class="w-full divide-y divide-gray-200 rounded-lg bg-gray-800">
                             <thead class="">
                                 <tr class="font medium text-xs text-left text-gray-100">
-                                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left uppercase tracking-wider whitespace-nowrap w-[200px]">
                                         Subject
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left uppercase tracking-wider whitespace-nowrap w-[200px]">
                                         Title
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left uppercase tracking-wider whitespace-nowrap w-[100px]">
                                         Coeff.
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left uppercase tracking-wider whitespace-nowrap w-[100px]">
                                         Note
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider">
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left uppercase tracking-wider whitespace-wrap w-[250px]">
                                         Description
                                     </th>
                                 </tr>
@@ -165,25 +170,23 @@
                             <tbody class="divide-y divide-gray-200">
                                 @foreach ($notes as $note)
                                     <tr class="text-gray-300 text-sm">
-                                        <td class="px-6 py-4 whitespace-nowrap">
+                                        <td class="px-6 py-4 whitespace-nowrap w-[200px]">
                                             {{ $note->evaluations->subjectModel->subjectName }}
-                                            {{-- {{ $note->evaluations->subject }} --}}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
+                                        <td class="px-6 py-4 whitespace-nowrap w-[200px]">
                                             {{ $note->evaluations->title }}
                                         </td>
-                                        <td class="py-3 px-6 text-left">
+                                        <td class="py-3 px-6 text-left w-[100px]">
                                             {{ $note->evaluations->coeff }}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
+                                        <td class="px-6 py-4 whitespace-nowrap w-[100px]">
                                             {{ $note->mark }}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
+                                        <td class="px-6 py-4 whitespace-wrap w-[250px]">
                                             {{ $note->description }}
                                         </td>
                                     </tr>
                                 @endforeach
-
                             </tbody>
                         </table>
                     </div>
